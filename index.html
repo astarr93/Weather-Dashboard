@@ -18,24 +18,29 @@
     </header>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3" id="Search">
+            <aside class="col-2" id="menu">
                 <fieldset>
-                    <legend>Menu</legend>
-                    <form>
-                        <label for="search">Search Location:</label>
-                        <input type="search" placeholder="ex. Raleigh">
+                    <legend>Search for a city:</legend>
+                    <form id="search">
+                        <input type="search" id="search-bar" placeholder="ex. Raleigh" tabindex="0">
+                        <button type"submit" id="search-button" form="search"><img
+                                src="assets/images/search-icon.svg"></button>
                     </form>
                 </fieldset>
-                <fieldset>
-                    <legend>Recent searches:</legend>
-                    <ul style="none">
-                    </ul>
-                </fieldset>
+                <div id="search-history">
+                </div>
+            </aside>
+            <div class="col-10" id="data-display">
+                <div class="container-fluid" id="currentData">
+                    <h1>Testing Dashboard</h1>
+                    <div id="mapid">
+                    </div>
+                </div>
+                <div class="container-fluid" id="forecast">
+                    <h1>Testing Forecast</h1>
+                </div>
             </div>
-            <div class="col-9" id="data-display">
-                <h1>Testing Dashboard</h1>
-            </div>
-
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
             <script src="assets/index.js"></script>
 </body>
 

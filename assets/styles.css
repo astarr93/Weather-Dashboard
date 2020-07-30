@@ -1,6 +1,29 @@
 header {
-    padding: 2em;
+    padding: 1em;
     text-align: center;
-    background-color: cyan;
-    font-family: 'Work Sans', sans-serif;
+    background-image: linear-gradient(#102542, 15%, #FFFFFF);
+    font-weight: bold;
+}
+
+aside {
+    background-color: #FBFBFF;
+}
+
+fieldset {
+    padding-bottom: 2em;
+}
+
+legend {
+    font-weight: bold;
+}
+
+#menu {
+    height: 100vh;
+    padding-top: 2em;
+    width: max-content;
+}
+
+#search-button {
+    border-color: blue;
+    background-color: lightskyblue;
 }
