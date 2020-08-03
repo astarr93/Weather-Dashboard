@@ -8,6 +8,8 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Patua+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/styles.css">
     <title>Weather Dashboard</title>
 </head>
@@ -18,30 +20,45 @@
     </header>
     <div class="container-fluid">
         <div class="row">
-            <aside class="col-2" id="menu">
+            <aside class="col-3" id="menu">
                 <fieldset>
-                    <legend>Search for a city:</legend>
+                    <legend id="menu-header">Search:</legend>
                     <form id="search">
-                        <input type="search" id="search-bar" placeholder="ex. Raleigh" tabindex="0">
-                        <button type"submit" id="search-button" form="search"><img
-                                src="assets/images/search-icon.svg"></button>
+                        <input type="search" id="search-bar" placeholder="Ex: Raleigh" tabindex="0"
+                            autocomplete="off"></input>
+                        <button type="submit" id="search-button"><i class="fa fa-search"></i></button>
                     </form>
                 </fieldset>
-                <div id="search-history">
-                </div>
+                <ul id="search-history">
+                </ul>
             </aside>
-            <div class="col-10" id="data-display">
-                <div class="container-fluid" id="currentData">
-                    <h1>Testing Dashboard</h1>
-                    <div id="mapid">
+            <main class="col-9" id="data-display">
+                <div class="container-fluid">
+                    <div class="row" id="weather-display">
+                        <div class="col-6">
+                            <div class="ml-auto mr-auto" id="weather">
+                                Test
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="ml-auto mr-auto" id="mapid">
+                                Test
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="forecast-display">
+                        <div class="col-12">
+                            <div class="ml-auto mr-auto" id="forecast">
+                                Test
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="container-fluid" id="forecast">
-                    <h1>Testing Forecast</h1>
-                </div>
-            </div>
-            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-            <script src="assets/index.js"></script>
+            </main>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="assets/index.js"></script>
 </body>
 
 </html>

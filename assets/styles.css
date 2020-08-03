@@ -1,29 +1,72 @@
 header {
-    padding: 1em;
-    text-align: center;
-    background-image: linear-gradient(#102542, 15%, #FFFFFF);
+    background-color: #161925;
+    color: #FDFFFC;
+    font-family: 'Patua One', cursive;
+    font-size: xx-large;
     font-weight: bold;
-}
-
-aside {
-    background-color: #FBFBFF;
+    padding: .3em;
+    text-align: center;
 }
 
 fieldset {
     padding-bottom: 2em;
 }
 
-legend {
+#menu {
+    background-color: whitesmoke;
+    height: 100vh;
+}
+
+#menu-header {
+    text-decoration: underline;
+    font-size: x-large;
     font-weight: bold;
 }
 
-#menu {
-    height: 100vh;
-    padding-top: 2em;
-    width: max-content;
+#search {
+    font-size: x-large;
+    margin: auto;
+    padding: 2px;
+}
+
+#search-bar {
+    background-color: whitesmoke;
+    border: 2px solid grey;
+    float: left;
 }
 
 #search-button {
-    border-color: blue;
-    background-color: lightskyblue;
+    background-color: #2196F3;
+    border: 2px solid grey;
+    color: white;
+    float: left;
+    text-align: left;
+    cursor: pointer;
+}
+
+#search-button:hover {
+    background-color: #0b7dda;
+}
+
+#search-history {
+    padding-left: 0;
+}
+
+#data-display {
+    margin: 0px;
+    padding: 0px;
+    background-color: white;
+    height: 100vh;
+}
+
+.history-button {
+    height: 50px;
+    width: 100%;
+    border: 2px solid grey;
+    color: white;
+    background-color: #2196F3;
+}
+
+.history-button:hover {
+    background-color: #0b7dda;
 }

@@ -3,44 +3,60 @@ let userInput = "";
 let searchedItems = [];
 const searchBar = $('#search-bar')
 const searchButton = $('#search-button')
-const searchHistory = $('#searh-history')
+const searchHistory = $('#search-history')
 
 // Start on DOM ready
 $(document).ready(function () {
     searchClickEvent();
-    displayHistory();
+    if (localStorage.userHistory) {
+        JSON.parse(localStorage.userHistory).forEach(function (record) {
+            searchedItems.push(record);
+        })
+        console.log(searchedItems);
+        displayHistory(searchedItems);
+    }
 })
 
 function searchClickEvent() {
     searchButton.on("click", function () {
         event.preventDefault();
-        userInput = searchBar.val();
-        recordSearch(userInput);
-        // weatherLookup(userInput);
+        if (searchBar.val() !== '') {
+            userInput = searchBar.val();
+            startLookup(userInput); // Retreive data from OpenWeatherAPI
+            recordLookup(userInput);  // Record search and update history
+        }
+        else {
+            alert("You suck!");
+            return;
+        }
     })
 }
 
-function recordSearch() {
-    searchedItems.push(userInput);
-    localStorage.setItem("Search History", searchedItems);
-    displayHistory(searchedItems);
-}
 
-function displayHistory() {
-    if (localStorage.getItem("Search History")) {
-        searchHistory.append($('<ul class="list-style" id="searchedItems">'));
-        localStorage.getItem("Search History").forEach(item => {
-
-        });
-    }
-}
-
-function weatherLookup() {
+// Pass in userInput to Open Weather API, response is weather data
+async function startLookup() {
     const accesstoken = "bf9f438089a6bdeedce9b06784b29a58";
-    const queryURL = `api.openweathermap.org/data/2.5/forecast?q=${userInput}&appid=${accesstoken}`;
+    const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${userInput}&units=imperial&appid=${accesstoken}`;
     console.log(queryURL);
-    $.ajax({ url: queryURL, method: "GET" }).then(function (response) {
+    await $.ajax({ url: queryURL, method: "GET" }).then(function (response) {
         data = JSON.stringify(response);
         console.log(data);
     })
 }
+
+function recordLookup() {
+    searchedItems.push(userInput);
+    localStorage.setItem("userHistory", JSON.stringify(searchedItems));
+
+}
+
+function displayHistory() {
+    searchHistory.append($('<p id="menu-header">History:</p>'));
+    // let city = JSON.parse(searchedItems);
+    searchedItems.forEach(function (item) {
+        searchHistory.append($(`<button class="history-button">${searchedItems.item}</button>`));
+    })
+}
+// searchedItems.forEach(function (item) {
+//     searchHistory.append($(`<button class="history-button">${searchedItems}</button>`));
+// })
