@@ -52,10 +52,6 @@ fieldset {
     padding-left: 0;
 }
 
-#search-history-label {
-    display: none;
-}
-
 #history {
     list-style: none;
     margin-left: 0;
