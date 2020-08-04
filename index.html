@@ -26,10 +26,17 @@
                     <form id="search">
                         <input type="search" id="search-bar" placeholder="Ex: Raleigh" tabindex="0"
                             autocomplete="off"></input>
-                        <button type="submit" id="search-button"><i class="fa fa-search"></i></button>
+                        <button type="submit" id="search-button" value="reset"><i class="fa fa-search"></i></button>
                     </form>
                 </fieldset>
-                <ul id="search-history">
+                <ul id="history">
+                    <li>
+                        <h1 class="hidden" id="search-history-label"></h1>
+                    </li>
+                    <li>
+                        <ul id="search-history">
+                        </ul>
+                    </li>
                 </ul>
             </aside>
             <main class="col-9" id="data-display">
