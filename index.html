@@ -31,33 +31,29 @@
                 </fieldset>
                 <ul id="history">
                     <li>
-                        <h1 class="hidden" id="search-history-label"></h1>
+                        <h1 class="hidden" id="menu-header">History: </h1>
                     </li>
                     <li>
                         <ul id="search-history">
                         </ul>
                     </li>
+                    <li>
+                        <button type="reset" class="hidden" id="clear-history-button">Clear</button>
+                    </li>
                 </ul>
             </aside>
-            <main class="col-9" id="data-display">
-                <div class="container-fluid">
-                    <div class="row" id="weather-display">
-                        <div class="col-6">
-                            <div class="ml-auto mr-auto" id="weather">
-                                Test
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="ml-auto mr-auto" id="mapid">
-                                Test
-                            </div>
+            <main class="col-9 hidden" id="data-display">
+                <div class="row" id="weather-display">
+                    <div class="col-10 ml-auto mr-auto display">
+                        <div class="ml-auto mr-auto" id="weather">
+                            Test
                         </div>
                     </div>
-                    <div class="row" id="forecast-display">
-                        <div class="col-12">
-                            <div class="ml-auto mr-auto" id="forecast">
-                                Test
-                            </div>
+                </div>
+                <div class="row" id="forecast-display">
+                    <div class="col-10 ml-auto mr-auto display">
+                        <div class="ml-auto mr-auto" id="forecast">
+                            Test
                         </div>
                     </div>
                 </div>

@@ -21,6 +21,7 @@ fieldset {
     text-decoration: underline;
     font-size: x-large;
     font-weight: bold;
+    margin-bottom: 1em;
 }
 
 #search {
@@ -49,7 +50,8 @@ fieldset {
 }
 
 #search-history {
-    padding-left: 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #history {
@@ -65,18 +67,32 @@ fieldset {
     height: 100vh;
 }
 
+.display {
+    border: 2px solid black;
+    padding: 2em;
+    margin: 2em;
+}
+
 .history-button {
     height: 50px;
-    width: 100%;
+    width: 90%;
     border: 2px solid grey;
-    color: white;
-    background-color: #2196F3;
+    color: black;
+    text-align: left;
+    text-indent: 20px;
+    background-color: white;
 }
 
 .history-button:hover {
     background-color: #0b7dda;
+    border-color: white;
+    color: white;
 }
 
 .hidden {
     display: none;
+}
+
+#clear-history-button {
+    margin-top: 1em;
 }
