@@ -20,7 +20,9 @@
     </header>
     <div class="container-fluid">
         <div class="row">
+            <!-- Controls -->
             <aside class="col-3" id="menu">
+                <!-- Search Bar and Button -->
                 <fieldset>
                     <legend id="menu-header">Search:</legend>
                     <form id="search">
@@ -29,32 +31,31 @@
                         <button type="submit" id="search-button" value="reset"><i class="fa fa-search"></i></button>
                     </form>
                 </fieldset>
+                <!-- History List -->
                 <ul id="history">
                     <li>
                         <h1 class="hidden" id="menu-header">History: </h1>
                     </li>
                     <li>
-                        <ul id="search-history">
-                        </ul>
+                        <form id="search-history">
+                        </form>
                     </li>
                     <li>
                         <button type="reset" class="hidden" id="clear-history-button">Clear</button>
                     </li>
                 </ul>
             </aside>
-            <main class="col-9 hidden" id="data-display">
-                <div class="row" id="weather-display">
-                    <div class="col-10 ml-auto mr-auto display">
-                        <div class="ml-auto mr-auto" id="weather">
-                            Test
-                        </div>
+            <!-- Data Display -->
+            <main class="col-8">
+                <div class="row display hidden">
+                    <!-- Display Current Weather -->
+                    <div class="col-10 ml-auto mr-auto" id="current-weather">
+                        <h1 id="location"></h1>
                     </div>
                 </div>
-                <div class="row" id="forecast-display">
-                    <div class="col-10 ml-auto mr-auto display">
-                        <div class="ml-auto mr-auto" id="forecast">
-                            Test
-                        </div>
+                <div class="row display hidden">
+                    <!-- Display Current Forecast -->
+                    <div class="col-10 ml-auto mr-auto" id="forecast">
                     </div>
                 </div>
             </main>
