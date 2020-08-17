@@ -99,3 +99,22 @@ fieldset {
 .hidden {
     display: none;
 }
+
+.uv-low {
+    color: white;
+    background-color: limegreen;
+}
+
+.uv-med {
+    color: black;
+    background-color: orange;
+}
+
+.uv-high {
+    color: black;
+    background-color: red;
+}
+
+#uvindex {
+    width: max-content;
+}

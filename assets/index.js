@@ -1,5 +1,6 @@
 // Search Menu Vars
 let userInput = "";
+let uvindex = 0;
 let searchedItems = [];
 const menu = $('#menu') // Side Bar
 const searchBar = $('#search-bar');
@@ -22,7 +23,7 @@ $(document).ready(function () {
 })
 
 // Click Events
-function searchClickEvent() {
+function searchClickEvent() { // Click button to search
     searchButton.on("click", function () {
         event.preventDefault();
         if (searchBar.val() !== '') {
@@ -39,7 +40,7 @@ function searchClickEvent() {
     })
 }
 
-function historyClickEvent() {
+function historyClickEvent() { // CLick button in aside to search previous lookup
     $('.history-button').on("click", function () {
         event.preventDefault();
         userInput = this.value;
@@ -70,10 +71,10 @@ function currentWeather() {
     const accesstoken = "bf9f438089a6bdeedce9b06784b29a58";
     const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${userInput}&units=imperial&appid=${accesstoken}`;
     saveSearch(userInput); // Record search and update history
+    currentForecast(userInput); // Grab forecast
     // Clear data display
     resetDisplay();
     $.ajax({ url: queryURL, method: "GET" }).then(function (response) {
-        console.log(response);
         // Grab and store currentWeather Data
         let today = new Date();
         let date = (today.getMonth() + 1) + '/' + (today.getDate()) + '/' + (today.getFullYear());
@@ -84,33 +85,44 @@ function currentWeather() {
         let humidity = "Humidity: " + response.main.humidity + "%";
         let windspeed = "Wind Speed: " + response.wind.speed + " MPH";
         let coords = [response.coord.lon, response.coord.lat];
-        let uvindex = getUVIndex(coords);
-        console.log(uvindex);
+        getUVIndex(coords);
         // Display Current Weather Data
         weatherDisplay.append($(`<h1>${city} ${date} <img src="${iconURL}"${icon}/></h1>`));
         weatherDisplay.append($(`<h6>${temperature}</h6>`));
         weatherDisplay.append($(`<h6>${humidity}</h6>`));
         weatherDisplay.append($(`<h6>${windspeed}</h6>`));
-        weatherDisplay.append($(`<h6 id="uvindex">${uvindex}</h6>`));
+        displayUVIndex(uvindex);
     })
-}
-
-
-function getUVIndex(coords) {
-    const accesstoken = "bf9f438089a6bdeedce9b06784b29a58";
-    const queryURL = `https://api.openweathermap.org/data/2.5/uvi?appid=${accesstoken}&lat=${coords[0]}&lon=${coords[1]}`;
-    $.ajax({ url: queryURL, method: "GET" }).then((response) => response.value);
-    console.log(response.value);
 }
 
 function currentForecast() {
     const accesstoken = "bf9f438089a6bdeedce9b06784b29a58";
     const queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${userInput}&units=imperial&appid=${accesstoken}`;
     $.ajax({ url: queryURL, method: "GET" }).then(function (response) {
-        return;
-        // weatherDisplay.append($(`<h1>${response.name}`)
+        console.log(response);
     })
 }
+
+function getUVIndex(coords) {
+    const accesstoken = "bf9f438089a6bdeedce9b06784b29a58";
+    const queryURL = `https://api.openweathermap.org/data/2.5/uvi?appid=${accesstoken}&lat=${coords[0]}&lon=${coords[1]}`;
+    $.ajax({ url: queryURL, method: "GET" }).then(function (response) {
+        uvindex = response.value;
+    })
+}
+
+function displayUVIndex(uvindex) {
+    if (uvindex < 3) {
+        weatherDisplay.append($(`<h6 class="uv-low" id="uvindex">UV Index: ${uvindex}</h6>`));
+    }
+    else if (uvindex > 3 && uvindex < 6) {
+        weatherDisplay.append($(`<h6 class="uv-med" id="uvindex">UV Index: ${uvindex}</h6>`));
+    }
+    else {
+        weatherDisplay.append($(`<h6 class="uv-high" id="uvindex">UV Index: ${uvindex}</h6>`));
+    }
+}
+
 
 // Search History Functions
 function loadHistory() { // Load local storage search results
