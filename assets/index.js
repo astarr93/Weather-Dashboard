@@ -102,7 +102,7 @@ function currentForecast() {// Pass in userInput from Search/History to Open Wea
                 //5 day forecast @ 3pm
                 const icon = response.list[i].weather[0].icon;
                 const iconURL = `http://openweathermap.org/img/w/${icon}.png`;
-                const iconIMG = $(`<img src="${iconURL}"${icon}/>`)
+                const iconIMG = $(`<img src="${iconURL}"${icon}/>`);
                 const date = moment(response.list[i].dt_txt.substring(0, 10)).format('L');
                 const temp = response.list[i].main.temp;
                 const humidity = response.list[i].main.humidity;
@@ -113,8 +113,7 @@ function currentForecast() {// Pass in userInput from Search/History to Open Wea
                     humidity: humidity,
                 }
                 forecastDisplay.append($(`<div class="forecast-card" id="${response.list[i].dt_txt}"></div>`));
-                let test = $(`#${response.list[i].dt_txt}`);
-                Object.values(forecast).forEach(key => test.append($(`<h6>${key}</h6>`)));
+                Object.values(forecast).forEach(key => $(`#${response.list[i].dt_txt}`).append($(`<h6>${key}</h6>`)));
             }
         }
 
