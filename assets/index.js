@@ -34,7 +34,7 @@ function searchClickEvent() { // Click button to search
             currentForecast(userInput); // Retreive data from OpenWeather API
         }
         else {
-            alert("You suck!"); // PLAY WITH LABELS INSTEAD OF ALERTS
+            alert("Please don't submit nothing!"); // PLAY WITH LABELS/MODALS INSTEAD OF ALERTS
             return;
         }
     })
@@ -60,7 +60,7 @@ function clearClickEvent() { // Clear Search History, Hide Search Label, Data Di
 function resetDisplay() { // Clears information in display
     while (weatherDisplay.firstChild) {
         weatherDisplay.empty();
-        // forecastDisplay.empty();
+        forecastDisplay.empty();
     }
 }
 
@@ -73,15 +73,15 @@ function currentWeather() {// Pass in userInput from Search/History to Open Weat
     resetDisplay();
     $.ajax({ url: queryURL, method: "GET" }).then(function (response) {
         // Grab and store currentWeather Data
-        let today = new Date();
-        let date = (today.getMonth() + 1) + '/' + (today.getDate()) + '/' + (today.getFullYear());
-        let city = response.name;
-        let icon = response.weather[0].icon;
-        let iconURL = `http://openweathermap.org/img/w/${icon}.png`;
-        let temperature = "Temperature: " + response.main.temp + " F";
-        let humidity = "Humidity: " + response.main.humidity + "%";
-        let windspeed = "Wind Speed: " + response.wind.speed + " MPH";
-        let coords = [response.coord.lon, response.coord.lat];
+        const today = new Date();
+        const date = (today.getMonth() + 1) + '/' + (today.getDate()) + '/' + (today.getFullYear());
+        const city = response.name;
+        const icon = response.weather[0].icon;
+        const iconURL = `http://openweathermap.org/img/w/${icon}.png`;
+        const temperature = "Temperature: " + response.main.temp + " F";
+        const humidity = "Humidity: " + response.main.humidity + "%";
+        const windspeed = "Wind Speed: " + response.wind.speed + " MPH";
+        const coords = [response.coord.lon, response.coord.lat];
         // Display Current Weather Data
         weatherDisplay.append($(`<h1>${city} ${date} <img src="${iconURL}"${icon}/></h1>`));
         weatherDisplay.append($(`<h6>${temperature}</h6>`));
@@ -100,15 +100,24 @@ function currentForecast() {// Pass in userInput from Search/History to Open Wea
             // only look at forecasts around 3:00pm
             if (response.list[i].dt_txt.indexOf("15:00:00") !== -1) {
                 //5 day forecast @ 3pm
-                // forecastData.push(response.list[i]);
-                forecastDisplay.append($(`<div class="forecast-card" id="${response.list}"></div>`));
+                const icon = response.list[i].weather[0].icon;
+                const iconURL = `http://openweathermap.org/img/w/${icon}.png`;
+                const iconIMG = $(`<img src="${iconURL}"${icon}/>`)
+                const date = moment(response.list[i].dt_txt.substring(0, 10)).format('L');
+                const temp = response.list[i].main.temp;
+                const humidity = response.list[i].main.humidity;
+                const forecast = {
+                    date: date,
+                    icon: iconIMG,
+                    temp: temp,
+                    humidity: humidity,
+                }
+                forecastDisplay.append($(`<div class="forecast-card" id="${response.list[i].dt_txt}"></div>`));
+                let test = $(`#${response.list[i].dt_txt}`);
+                Object.values(forecast).forEach(key => test.append($(`<h6>${key}</h6>`)));
             }
         }
-        // console.log(forecastData);
-        // let forecastCard = $('#forecast-card');
-        // for (i = 0; i < forecastData.length; i++) {
-        //     forecastDisplay.append($(`<div class="forecast-card">`))
-        // }
+
     })
 }
 
@@ -117,21 +126,21 @@ function getUVIndex(coords) { // Get UVIndex data from OpenWeather API
     const accesstoken = "bf9f438089a6bdeedce9b06784b29a58";
     const queryURL = `https://api.openweathermap.org/data/2.5/uvi?appid=${accesstoken}&lat=${coords[0]}&lon=${coords[1]}`;
     $.ajax({ url: queryURL, method: "GET" }).then(function (response) {
-        let uvIndex = response.value;
+        const uvIndex = response.value;
         displayUVIndex(uvIndex);
     })
 }
 
 function displayUVIndex(uvIndex) { // Display UVIndex in currentWeather and attach specific styling based on value
-    let uvlabel = "UV Index: ";
+    const uvlabel = "UV Index: ";
     if (uvIndex < 3) {
-        weatherDisplay.append($(`<h6 class="uv-low" id="uvindex">UV Index: ${uvIndex}</h6>`));
+        weatherDisplay.append($(`<h6>${uvlabel}<span class="uv-low" id="uvindex">${uvIndex}</span></h6>`));
     }
     else if (uvIndex > 3 && uvIndex < 6) {
-        weatherDisplay.append($(`<h6 class="uv-med" id="uvindex">UV Index: ${uvIndex}</h6>`));
+        weatherDisplay.append($(`<h6>${uvlabel}<span class="uv-med" id="uvindex">${uvIndex}</span></h6>`));
     }
     else {
-        weatherDisplay.append($(`<h6 class="uv-high" id="uvindex">UV Index: ${uvIndex}</h6>`));
+        weatherDisplay.append($(`<h6>${uvlabel}<span class="uv-high" id="uvindex">${uvIndex}</span></h6>`));
     }
 }
 

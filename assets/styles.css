@@ -119,6 +119,8 @@ fieldset {
     color: black;
     background-color: ghostwhite;
     display: inline-block;
-    height: max-content;
-    width: max-content;
+    margin-right: 2em;
+    margin-bottom: 2em;
+    height: 250px;
+    width: 250px;
 }
