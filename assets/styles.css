@@ -14,10 +14,6 @@ fieldset {
 
 /* Side-Bar Ids */
 
-#menu {
-    background-color: whitesmoke;
-}
-
 #menu-header {
     text-decoration: underline;
     font-size: x-large;
@@ -116,5 +112,13 @@ fieldset {
 }
 
 #uvindex {
+    width: max-content;
+}
+
+.forecast-card {
+    color: black;
+    background-color: ghostwhite;
+    display: inline-block;
+    height: max-content;
     width: max-content;
 }

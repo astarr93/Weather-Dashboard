@@ -1,6 +1,6 @@
 // Search Menu Vars
 let userInput = "";
-let uvindex = 0;
+let forecastData = [];
 let searchedItems = [];
 const menu = $('#menu') // Side Bar
 const searchBar = $('#search-bar');
@@ -11,7 +11,7 @@ const clearHistoryButton = $('#clear-history-button');
 // Data Display Vars
 const weatherDisplay = $('#current-weather');
 const weatherLocation = $('#location');
-
+const forecastDisplay = $('#forecast');
 
 
 // DOM Start
@@ -31,7 +31,7 @@ function searchClickEvent() { // Click button to search
             document.getElementById("search").reset()
             // NEED TO VALIDATE INPUT BEFORE SUBMISSION
             currentWeather(userInput); // Retreive data from OpenWeatherAPI
-            // currentForecast(userInput);
+            currentForecast(userInput); // Retreive data from OpenWeather API
         }
         else {
             alert("You suck!"); // PLAY WITH LABELS INSTEAD OF ALERTS
@@ -45,7 +45,7 @@ function historyClickEvent() { // CLick button in aside to search previous looku
         event.preventDefault();
         userInput = this.value;
         currentWeather(userInput);
-        // currentForecast(userInput);
+        currentForecast(userInput);
     })
 }
 
@@ -58,20 +58,17 @@ function clearClickEvent() { // Clear Search History, Hide Search Label, Data Di
 }
 
 function resetDisplay() { // Clears information in display
-    let display = document.getElementById('current-weather');
-    while (display.firstChild) {
-        display.removeChild(display.firstChild);
+    while (weatherDisplay.firstChild) {
+        weatherDisplay.empty();
+        // forecastDisplay.empty();
     }
 }
 
-
-
-// Pass in userInput from Search/History to Open Weather API for current weather data response
-function currentWeather() {
+// Get and Display Data from OpenWeather API
+function currentWeather() {// Pass in userInput from Search/History to Open Weather API for current weather data response
     const accesstoken = "bf9f438089a6bdeedce9b06784b29a58";
     const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${userInput}&units=imperial&appid=${accesstoken}`;
     saveSearch(userInput); // Record search and update history
-    currentForecast(userInput); // Grab forecast
     // Clear data display
     resetDisplay();
     $.ajax({ url: queryURL, method: "GET" }).then(function (response) {
@@ -85,54 +82,70 @@ function currentWeather() {
         let humidity = "Humidity: " + response.main.humidity + "%";
         let windspeed = "Wind Speed: " + response.wind.speed + " MPH";
         let coords = [response.coord.lon, response.coord.lat];
-        getUVIndex(coords);
         // Display Current Weather Data
         weatherDisplay.append($(`<h1>${city} ${date} <img src="${iconURL}"${icon}/></h1>`));
         weatherDisplay.append($(`<h6>${temperature}</h6>`));
         weatherDisplay.append($(`<h6>${humidity}</h6>`));
         weatherDisplay.append($(`<h6>${windspeed}</h6>`));
-        displayUVIndex(uvindex);
+        getUVIndex(coords);
     })
 }
 
-function currentForecast() {
+
+function currentForecast() {// Pass in userInput from Search/History to Open Weather API for current forecast data response
     const accesstoken = "bf9f438089a6bdeedce9b06784b29a58";
     const queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${userInput}&units=imperial&appid=${accesstoken}`;
     $.ajax({ url: queryURL, method: "GET" }).then(function (response) {
-        console.log(response);
+        for (let i = 0; i < response.list.length; i++) {
+            // only look at forecasts around 3:00pm
+            if (response.list[i].dt_txt.indexOf("15:00:00") !== -1) {
+                //5 day forecast @ 3pm
+                // forecastData.push(response.list[i]);
+                forecastDisplay.append($(`<div class="forecast-card" id="${response.list}"></div>`));
+            }
+        }
+        // console.log(forecastData);
+        // let forecastCard = $('#forecast-card');
+        // for (i = 0; i < forecastData.length; i++) {
+        //     forecastDisplay.append($(`<div class="forecast-card">`))
+        // }
     })
 }
 
-function getUVIndex(coords) {
+// UV Index Functions
+function getUVIndex(coords) { // Get UVIndex data from OpenWeather API
     const accesstoken = "bf9f438089a6bdeedce9b06784b29a58";
     const queryURL = `https://api.openweathermap.org/data/2.5/uvi?appid=${accesstoken}&lat=${coords[0]}&lon=${coords[1]}`;
     $.ajax({ url: queryURL, method: "GET" }).then(function (response) {
-        uvindex = response.value;
+        let uvIndex = response.value;
+        displayUVIndex(uvIndex);
     })
 }
 
-function displayUVIndex(uvindex) {
-    if (uvindex < 3) {
-        weatherDisplay.append($(`<h6 class="uv-low" id="uvindex">UV Index: ${uvindex}</h6>`));
+function displayUVIndex(uvIndex) { // Display UVIndex in currentWeather and attach specific styling based on value
+    let uvlabel = "UV Index: ";
+    if (uvIndex < 3) {
+        weatherDisplay.append($(`<h6 class="uv-low" id="uvindex">UV Index: ${uvIndex}</h6>`));
     }
-    else if (uvindex > 3 && uvindex < 6) {
-        weatherDisplay.append($(`<h6 class="uv-med" id="uvindex">UV Index: ${uvindex}</h6>`));
+    else if (uvIndex > 3 && uvIndex < 6) {
+        weatherDisplay.append($(`<h6 class="uv-med" id="uvindex">UV Index: ${uvIndex}</h6>`));
     }
     else {
-        weatherDisplay.append($(`<h6 class="uv-high" id="uvindex">UV Index: ${uvindex}</h6>`));
+        weatherDisplay.append($(`<h6 class="uv-high" id="uvindex">UV Index: ${uvIndex}</h6>`));
     }
 }
-
 
 // Search History Functions
 function loadHistory() { // Load local storage search results
     if (localStorage.userHistory) {
-        $('#menu-header').removeClass("hidden");
+        $('#history').removeClass("hidden");
         clearHistoryButton.removeClass("hidden");
         searchedItems = JSON.parse(localStorage.userHistory);
         searchedItems.forEach(function (userInput) {
             searchHistory.append($(`<button type="submit" class="history-button" value="${userInput}">${userInput}</button>`));
         })
+        // let lastSearch = searchedItems.shift();
+        // currentWeather(lastSearch);
     }
 }
 
