@@ -1,4 +1,4 @@
-# Plan for beautiful wweather with this simple weather dashboard!
+# Plan for beautiful weather with this simple weather dashboard!
 
 Try it out: https://astarr93.github.io/weather-dashboard/
 
