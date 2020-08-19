@@ -8,4 +8,6 @@ This weather dashboard is powered using a free OpenWeatherAPI key with asynchron
 
 # How do I use the app?
 
-Use the Search Bar on the left to search for a US city. Current weather information will automatically be displayed in the main portion of the page. Forecast cards will appear directly below the current data with the next 5-days laid out from right=to-left. User history is saved to the browser's local storage and a button will appear below the search bar. Every search is saved and creates a history button that can be used to return to that location's results. After 5 searches, the list will automatically remove the oldest search. Click the clear button to delete local storage and reload the app.
+Use the Search Bar on the left to search for a US city. Current weather information will automatically be displayed in the main portion of the page. Forecast cards will appear directly below the current data with the next 5-days laid out from right=to-left. Click on the clear button to delete your search history and reload the app.
+
+User history is saved to the browser's local storage and a button will appear below the search bar. Every search is saved and creates a history button that can be used to return to that location's results. After 5 searches, the list will automatically remove the oldest search.
