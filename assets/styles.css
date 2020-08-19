@@ -14,6 +14,29 @@ fieldset {
 
 /* Side-Bar Ids */
 
+#clear-history-button {
+    margin-top: 1em;
+}
+
+#current-weather {
+    float: left;
+    margin: 0;
+    border: 2px solid black;
+    background-color: lightslategrey;
+    padding: 1em;
+    margin: 1em;
+}
+
+#forecast {
+    margin-top: 2em;
+}
+
+#history {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
 #menu-header {
     text-decoration: underline;
     font-size: x-large;
@@ -51,22 +74,32 @@ fieldset {
     margin-right: auto;
 }
 
-#history {
-    list-style: none;
-    margin-left: 0;
-    padding-left: 0;
-}
-
-#clear-history-button {
-    margin-top: 1em;
-}
-
-#current-weather {
-    float: left;
-    margin: 0;
+#uvindex {
+    height: max-content;
+    width: max-content;
 }
 
 /* Classes */
+
+.display {
+    width: 100%;
+}
+
+.forecast-card {
+    border: 2px solid black;
+    color: black;
+    background-color: lightslategray;
+    display: inline-block;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 1em;
+    height: 200px;
+    width: 200px;
+}
+
+.hidden {
+    display: none;
+}
 
 .history-button {
     height: 50px;
@@ -85,17 +118,6 @@ fieldset {
     color: white;
 }
 
-.display {
-    border: 2px solid black;
-    background-color: lightslategrey;
-    padding: 1em;
-    margin: 1em;
-}
-
-.hidden {
-    display: none;
-}
-
 .uv-low {
     color: white;
     background-color: limegreen;
@@ -109,18 +131,4 @@ fieldset {
 .uv-high {
     color: black;
     background-color: red;
-}
-
-#uvindex {
-    width: max-content;
-}
-
-.forecast-card {
-    color: black;
-    background-color: ghostwhite;
-    display: inline-block;
-    margin-right: 2em;
-    margin-bottom: 2em;
-    height: 250px;
-    width: 250px;
 }

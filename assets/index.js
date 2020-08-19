@@ -34,7 +34,7 @@ function searchClickEvent() { // Click button to search
             currentForecast(userInput); // Retreive data from OpenWeather API
         }
         else {
-            alert("Please don't submit nothing!"); // PLAY WITH LABELS/MODALS INSTEAD OF ALERTS
+            alert("Please submit something!"); // PLAY WITH LABELS/MODALS INSTEAD OF ALERTS
             return;
         }
     })
@@ -58,10 +58,8 @@ function clearClickEvent() { // Clear Search History, Hide Search Label, Data Di
 }
 
 function resetDisplay() { // Clears information in display
-    while (weatherDisplay.firstChild) {
-        weatherDisplay.empty();
-        forecastDisplay.empty();
-    }
+    weatherDisplay.empty();
+    forecastDisplay.empty();
 }
 
 // Get and Display Data from OpenWeather API
@@ -97,23 +95,26 @@ function currentForecast() {// Pass in userInput from Search/History to Open Wea
     const queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${userInput}&units=imperial&appid=${accesstoken}`;
     $.ajax({ url: queryURL, method: "GET" }).then(function (response) {
         for (let i = 0; i < response.list.length; i++) {
-            // only look at forecasts around 3:00pm
+            // Only look at forecasts around 3:00pm
             if (response.list[i].dt_txt.indexOf("15:00:00") !== -1) {
-                //5 day forecast @ 3pm
+                // 5 day forecast @ 3pm
                 const icon = response.list[i].weather[0].icon;
                 const iconURL = `http://openweathermap.org/img/w/${icon}.png`;
-                const iconIMG = $(`<img src="${iconURL}"${icon}/>`);
+                const iconIMG = `<img src="${iconURL}"${icon}/>`;
                 const date = moment(response.list[i].dt_txt.substring(0, 10)).format('L');
                 const temp = response.list[i].main.temp;
                 const humidity = response.list[i].main.humidity;
                 const forecast = {
                     date: date,
                     icon: iconIMG,
-                    temp: temp,
-                    humidity: humidity,
+                    temp: "Temperature: " + temp + " &#730F",
+                    humidity: "Humidity: " + humidity + "%",
                 }
-                forecastDisplay.append($(`<div class="forecast-card" id="${response.list[i].dt_txt}"></div>`));
-                Object.values(forecast).forEach(key => $(`#${response.list[i].dt_txt}`).append($(`<h6>${key}</h6>`)));
+                forecastDisplay.append(`<div class="forecast-card" id=${response.list[i].dt_txt}></div>`);
+                Object.values(forecast).forEach(value => {
+                    var temp = response.list[i].dt_txt.split(" ");
+                    $("#" + temp[0]).append(`<h6>${value}</h6>`);
+                });
             }
         }
 
@@ -149,11 +150,10 @@ function loadHistory() { // Load local storage search results
         $('#history').removeClass("hidden");
         clearHistoryButton.removeClass("hidden");
         searchedItems = JSON.parse(localStorage.userHistory);
-        searchedItems.forEach(function (userInput) {
-            searchHistory.append($(`<button type="submit" class="history-button" value="${userInput}">${userInput}</button>`));
-        })
-        // let lastSearch = searchedItems.shift();
-        // currentWeather(lastSearch);
+        searchedItems.forEach((userInput) => searchHistory.append($(`<button type="submit" class="history-button" value="${userInput}">${userInput}</button>`)));
+        userInput = searchedItems.shift();
+        currentWeather(userInput);
+        currentForecast(userInput);
     }
 }
 
